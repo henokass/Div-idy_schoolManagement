@@ -75,7 +75,8 @@ public class ReportsController : ControllerBase
     [Authorize(Roles = "ADMIN,ACCOUNTANT")]
     public async Task<IActionResult> GetFeesReport()
     {
-        var totalExpected = await _db.FeeStructures.SumAsync(f => f.Amount);
+        var totalExpected = await _db.FeeStructures.Include(f => f.Class).ThenInclude(c => c.Students)
+            .SumAsync(f => f.Amount * f.Class.Students.Count);
         var totalCollected = await _db.FeePayments.SumAsync(p => p.AmountPaid);
         return Ok(new { TotalExpected = totalExpected, TotalCollected = totalCollected, Outstanding = totalExpected - totalCollected, CollectionRate = totalExpected > 0 ? Math.Round(totalCollected / totalExpected * 100, 1) : 0 });
     }

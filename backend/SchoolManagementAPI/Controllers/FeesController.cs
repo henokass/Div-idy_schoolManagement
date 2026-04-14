@@ -115,7 +115,7 @@ public class FeesController : ControllerBase
     [Authorize(Roles = "ADMIN,ACCOUNTANT")]
     public async Task<IActionResult> GetReport()
     {
-        var structures = await _db.FeeStructures.Include(f => f.Class).ToListAsync();
+        var structures = await _db.FeeStructures.Include(f => f.Class).ThenInclude(c => c.Students).ToListAsync();
         var report = new List<object>();
 
         foreach (var fs in structures)
@@ -131,7 +131,7 @@ public class FeesController : ControllerBase
 
         return Ok(new
         {
-            TotalExpected = structures.Sum(s => s.Amount),
+            TotalExpected = structures.Sum(s => s.Amount * (s.Class?.Students?.Count ?? 0)),
             TotalCollected = await _db.FeePayments.SumAsync(p => p.AmountPaid),
             Structures = report
         });

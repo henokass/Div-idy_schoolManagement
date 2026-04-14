@@ -66,8 +66,10 @@ public class NotificationsController : ControllerBase
     [HttpPut("{id}/read")]
     public async Task<IActionResult> MarkAsRead(int id)
     {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         var notification = await _db.Notifications.FindAsync(id);
         if (notification == null) return NotFound();
+        if (notification.RecipientId != userId) return Forbid();
         notification.IsRead = true;
         await _db.SaveChangesAsync();
         return Ok(new { message = "Marked as read" });
