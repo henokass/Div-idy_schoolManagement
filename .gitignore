@@ -1,4 +1,24 @@
+# Node
 node_modules/
 dist/
+.angular/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# Environment
 .env
-*.log
+*.env.local
+
+# OS
+.DS_Store
+Thumbs.db

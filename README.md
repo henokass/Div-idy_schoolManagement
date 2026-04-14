@@ -1,116 +1,117 @@
-# Golden Academy - School Management System (SMS)
+# School Management System (SMS) - Golden Academy
 
-A comprehensive web-based School Management System built for Golden Academy to manage students, staff, academics, finances, and communications.
+A comprehensive web-based school management system built with Angular, .NET API, and MSSQL.
 
 ## Tech Stack
 
-- **Frontend**: React 19 + TypeScript + Tailwind CSS v4 + Vite
-- **Backend**: Node.js + Express + TypeScript
-- **Database**: PostgreSQL + Prisma ORM
-- **Authentication**: JWT with role-based access control
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Angular 18 + TypeScript + Tailwind CSS + PrimeNG Icons |
+| Backend | .NET 8 Web API (C#) |
+| Database | MSSQL with Entity Framework Core ORM |
+| Auth | JWT-based with Role-Based Access Control |
 
 ## Features
 
-- **User Authentication** - Secure login with role-based access (Admin, Teacher, Student, Parent, Accountant)
-- **Student Management** - Register, view, update, and delete student records
-- **Staff Management** - Manage teacher profiles, qualifications, and assignments
-- **Attendance Management** - Record and track daily attendance with bulk operations
-- **Academic Management** - Subjects, grades, timetables, and report cards
-- **Fee Management** - Fee structures, payment recording, financial reports
-- **Library Management** - Book inventory, issue/return tracking, fine calculation
-- **Communication** - Notifications and announcements system
-- **Reports & Analytics** - Academic, attendance, and financial reports
+### User Roles
+- **Admin** – Full system control
+- **Teacher** – Manage classes, grades, attendance
+- **Student** – View academic records
+- **Parent** – Monitor student progress
+- **Accountant** – Manage financial records
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- PostgreSQL 14+
-
-### Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/henokass/Div-idy_schoolManagement.git
-   cd Div-idy_schoolManagement
-   ```
-
-2. **Backend Setup**
-   ```bash
-   cd backend
-   npm install
-   cp .env.example .env
-   # Update .env with your PostgreSQL credentials
-   npx prisma migrate dev --name init
-   npx prisma db seed
-   npm run dev
-   ```
-
-3. **Frontend Setup**
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
-
-4. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
-
-### Demo Accounts
-
-| Role       | Username    | Password      |
-|------------|-------------|---------------|
-| Admin      | admin       | admin123      |
-| Teacher    | teacher1    | teacher123    |
-| Student    | student1    | student123    |
-| Parent     | parent1     | parent123     |
-| Accountant | accountant1 | accountant123 |
-
-## API Endpoints
-
-| Module          | Base URL             | Methods                    |
-|-----------------|----------------------|----------------------------|
-| Authentication  | `/api/auth`          | POST login, register       |
-| Students        | `/api/students`      | GET, POST, PUT, DELETE     |
-| Teachers        | `/api/teachers`      | GET, POST, PUT, DELETE     |
-| Classes         | `/api/classes`       | GET, POST, PUT, DELETE     |
-| Subjects        | `/api/subjects`      | GET, POST, PUT, DELETE     |
-| Attendance      | `/api/attendance`    | GET, POST (bulk)           |
-| Grades          | `/api/grades`        | GET, POST, PUT, DELETE     |
-| Timetable       | `/api/timetable`     | GET, POST, PUT, DELETE     |
-| Fees            | `/api/fees`          | GET, POST (structures/payments) |
-| Library         | `/api/library`       | GET, POST, PUT (books/issues)   |
-| Notifications   | `/api/notifications` | GET, POST, PUT             |
-| Announcements   | `/api/announcements` | GET, POST, PUT, DELETE     |
-| Reports         | `/api/reports`       | GET                        |
-| Dashboard       | `/api/dashboard`     | GET                        |
+### Modules
+- **Authentication** – JWT login, registration (admin only), password change
+- **Student Management** – CRUD operations, class assignment, parent linking
+- **Staff Management** – Teacher profiles, qualifications, subject/class assignments
+- **Attendance** – Bulk daily recording, per-student/class reports
+- **Academic Management** – Subjects, grades with auto letter-grade calculation, report cards
+- **Timetable** – 5-day grid view with time slots, color-coded by subject
+- **Fee Management** – Fee structures, payment recording, financial reports
+- **Library** – Book inventory, issue/return with automatic fine calculation (5 Birr/day)
+- **Communication** – Notifications (send/read/bulk), announcements with audience targeting
+- **Reports** – Academic, attendance, financial reports with visual charts
+- **Dashboards** – Role-specific dashboards for all 5 user types
 
 ## Project Structure
 
 ```
 ├── backend/
-│   ├── prisma/
-│   │   ├── schema.prisma    # Database schema
-│   │   └── seed.ts          # Seed data
-│   ├── src/
-│   │   ├── index.ts         # Express server entry
-│   │   ├── middleware/       # Auth middleware
-│   │   ├── routes/           # API routes
-│   │   └── utils/            # Utilities (Prisma client)
-│   └── package.json
+│   └── SchoolManagementAPI/
+│       ├── Controllers/      # API controllers (13 controllers)
+│       ├── Data/             # Entity Framework DbContext
+│       ├── DTOs/             # Data Transfer Objects
+│       ├── Models/           # Entity models (17 entities)
+│       ├── Services/         # JWT service, DB seeder
+│       ├── Program.cs        # App configuration
+│       └── appsettings.json  # Configuration
 ├── frontend/
-│   ├── src/
-│   │   ├── components/       # Shared components (Layout)
-│   │   ├── contexts/         # React contexts (Auth)
-│   │   ├── pages/            # Page components
-│   │   ├── types/            # TypeScript interfaces
-│   │   └── utils/            # API client
-│   └── package.json
+│   └── src/
+│       └── app/
+│           ├── components/   # Layout component
+│           ├── guards/       # Auth guard
+│           ├── models/       # TypeScript interfaces
+│           ├── pages/        # 14 page components
+│           └── services/     # Auth, API, HTTP interceptor
 └── README.md
 ```
 
-## License
+## Setup Instructions
 
-This project is developed for Golden Academy.
+### Prerequisites
+- .NET 8 SDK
+- Node.js 18+
+- MSSQL Server (or SQL Server Express)
+
+### Backend Setup
+```bash
+cd backend/SchoolManagementAPI
+
+# Update connection string in appsettings.json if needed
+# Default: Server=localhost;Database=SchoolManagement;Trusted_Connection=True;TrustServerCertificate=True;
+
+# Run the API (auto-creates DB and seeds data)
+dotnet run
+```
+The API starts at `http://localhost:5000` with Swagger UI at `/swagger`.
+
+### Frontend Setup
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start dev server
+ng serve
+```
+The frontend starts at `http://localhost:4200`.
+
+## Demo Accounts
+
+| Role | Username | Password |
+|------|----------|----------|
+| Admin | admin | admin123 |
+| Teacher | teacher1 | teacher123 |
+| Student | student1 | student123 |
+| Parent | parent1 | parent123 |
+| Accountant | accountant1 | accountant123 |
+
+## API Endpoints
+
+| Controller | Endpoints |
+|-----------|-----------|
+| Auth | POST /api/auth/login, POST /api/auth/register, GET /api/auth/me, PUT /api/auth/change-password |
+| Students | GET/POST /api/students, GET/PUT/DELETE /api/students/:id |
+| Teachers | GET/POST /api/teachers, GET/PUT/DELETE /api/teachers/:id |
+| Classes | GET/POST /api/classes, GET/PUT/DELETE /api/classes/:id |
+| Subjects | GET/POST /api/subjects, POST /api/subjects/:id/teachers, POST /api/subjects/:id/classes |
+| Attendance | GET /api/attendance, POST /api/attendance/bulk, GET /api/attendance/class/:id |
+| Grades | GET/POST /api/grades, POST /api/grades/bulk, GET /api/grades/report-card/:id |
+| Timetable | GET /api/timetable/class/:id, GET /api/timetable/teacher/:id, POST/PUT/DELETE /api/timetable |
+| Fees | GET/POST /api/fees/structures, GET/POST /api/fees/payments, GET /api/fees/student/:id |
+| Library | GET/POST /api/library/books, POST /api/library/issue, PUT /api/library/return/:id |
+| Notifications | GET/POST /api/notifications, PUT /api/notifications/:id/read |
+| Announcements | GET/POST/PUT/DELETE /api/announcements |
+| Reports | GET /api/reports/overview, GET /api/reports/fees, GET /api/reports/attendance |
+| Dashboard | GET /api/dashboard (role-based response) |
