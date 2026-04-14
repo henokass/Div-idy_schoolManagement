@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{37836BC9-A23B-47A3-8DCC-F567F279041B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMS.API", "backend\SMS.API\SMS.API.csproj", "{A1EEF89E-821E-4B3C-8325-D232B4F76C4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1EEF89E-821E-4B3C-8325-D232B4F76C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1EEF89E-821E-4B3C-8325-D232B4F76C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1EEF89E-821E-4B3C-8325-D232B4F76C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1EEF89E-821E-4B3C-8325-D232B4F76C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A1EEF89E-821E-4B3C-8325-D232B4F76C4C} = {37836BC9-A23B-47A3-8DCC-F567F279041B}
+	EndGlobalSection
+EndGlobal
