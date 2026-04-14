@@ -37,15 +37,18 @@ public class DashboardController : ControllerBase
             .SumAsync(f => (decimal?)f.AmountPaid) ?? 0;
 
         var sevenDaysAgo = DateTime.UtcNow.AddDays(-7);
-        var recentAttendance = await _context.Attendances
+        var attendanceRecords = await _context.Attendances
             .Where(a => a.Date >= sevenDaysAgo)
+            .ToListAsync();
+
+        var recentAttendance = attendanceRecords
             .GroupBy(a => a.Date.Date)
             .Select(g => new AttendanceSummaryDto(
                 g.Key,
                 g.Count(a => a.Status == AttendanceStatus.Present),
                 g.Count(a => a.Status == AttendanceStatus.Absent),
                 g.Count(a => a.Status == AttendanceStatus.Late)
-            )).OrderByDescending(a => a.Date).ToListAsync();
+            )).OrderByDescending(a => a.Date).ToList();
 
         return Ok(new DashboardDto(
             totalStudents, totalStaff, totalClasses, totalSubjects,
